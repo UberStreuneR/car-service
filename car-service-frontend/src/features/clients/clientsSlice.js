@@ -16,6 +16,9 @@ export const clientsSlice = createSlice({
       return action.payload;
     },
   },
+  // extraReducers(builder) {
+  //   builder.addCase(useAddClientMutation.fulfilled, clientsAdapter.upsertOne);
+  // },
 });
 
 export const { addClient } = clientsSlice.actions;

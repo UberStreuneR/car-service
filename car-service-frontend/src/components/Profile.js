@@ -222,7 +222,8 @@ const SignUpForm = ({ setClient, setLoginAction }) => {
   const [helperText, setHelperText] = useState("");
   const [disabledSignUp, setDisabledSignUp] = useState(true);
 
-  const [addClientMutation] = useAddClientMutation();
+  const [addClientMutation, data, isLoading, isFetching, isSuccess, isError] =
+    useAddClientMutation();
   const registeredClient = useSelector((state) =>
     selectClientByEmail(state, email)
   );
@@ -242,7 +243,10 @@ const SignUpForm = ({ setClient, setLoginAction }) => {
   });
 
   const handleSignUpClicked = () => {
-    addClientMutation({ email, name, dob });
+    addClientMutation({ email, name, dob }).then((res) => {
+      dispatch(addClient(res.data));
+      setClient(res.data);
+    });
     setLoginAction(true);
   };
 
@@ -331,9 +335,9 @@ function Profile(props) {
   const [client, setClient] = useState(localClient);
 
   const [id, setId] = useState();
-  const [name, setName] = useState("John Wallace");
-  const [age, setAge] = useState(20);
-  const [email, setEmail] = useState("john.wallace@gmail.com");
+  const [name, setName] = useState("");
+  const [age, setAge] = useState();
+  const [email, setEmail] = useState();
 
   const profileProps = { name, age, email, id };
   const editProps = { ...profileProps, setName, setAge, setEmail };

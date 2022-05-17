@@ -32,8 +32,9 @@ public class ClientController {
     }
 
     @PostMapping
-    public void registerNewClient(@RequestBody Client client) {
+    public Client registerNewClient(@RequestBody Client client) {
         clientService.addNewClient(client);
+        return clientService.getClientById(client.getId());
     }
 
     @DeleteMapping(path="delete/{clientId}")
